@@ -1,0 +1,103 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* 使得手机上禁止动来动去 */
+    overflow: hidden;
+}
+
+ul,ol {
+    list-style: none;
+}
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+ }
+
+canvas {
+    background-color: white;
+    display: block;
+
+    /* 将canvas固定定位以防在手机上滑动 */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.features {
+    position: fixed;
+    left: 1em;
+    top: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.features svg {
+    width: 2em;
+    height: 2em;
+    margin-right: 0.5em;
+    transition: transform 0.5s;
+}
+
+.features svg.active {
+    fill: skyblue;
+    transform: scale(1.2);
+}
+
+
+.features > #brush {
+    display: none;
+}
+
+.features > #brush {
+    display: inline-block;
+}
+
+.colors {
+    position: fixed;
+    left: 10px;
+    top: 60px;
+    /* border: 1px solid red; */
+    margin: 10px 0;
+}
+
+.colors > li {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    margin-bottom: 10px;
+}
+
+.colors > li:nth-child(2) {
+    background-color: green;
+}
+
+.colors > li:nth-child(3) {
+    background-color: blue;
+}
+
+.sizes {
+    position: fixed;
+    right: 20px;
+    top: 10px;
+}
+
+.sizes > .thin {
+    background-color: red;
+    height: 0;
+    width: 20px;
+    border-top: 3px solid black;
+}
+.sizes > .thick {
+    height: 0;
+    width: 20px;
+    border-top: 10px solid black;
+    margin-top: 20px;
+}
