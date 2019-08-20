@@ -1,0 +1,385 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul,ol {
+    list-style: none;
+}
+
+.clearfix::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+ }
+body {
+   /* height: 2000px; */
+   /* position: relative; */
+}
+header {
+    background-color: #ffffff;
+}
+
+header h1 {
+    font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color:#131C26; 
+    text-align: center;
+    padding: 12px 56px;
+    border-bottom: 1px solid #d7dde3;
+}
+
+/* 导航部分 */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #d7dde3; 
+}
+
+.nav > .clear-all {
+    display: flex;
+    border: 1px solid red;
+}
+
+.nav > .clear-all > button{
+  outline: none;
+  border: none;
+  background-color: #ececec;
+  border-radius: 50%;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.nav > .clear-all > button > svg{
+   display: inline-block;
+   width:24px;
+   height: 24px;
+   fill: #ffffff;
+   margin: 8px; 
+}
+
+.nav > .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav > .center > .brush-eraser-wrapper{
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.nav > .center > .brush-eraser-wrapper > svg{
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.nav > .center > .brush-eraser-wrapper > svg:first-child{
+    margin-right: 10px;
+}
+
+.nav > .center > .brush-eraser-wrapper > .line {
+   position: absolute;
+   width: 34px;
+   height: 2px;
+   background-color: #1a8cff;
+   left: 0px;
+   top: 40px;
+   transition: all 0.3s;
+}
+.nav > .center > .brush-eraser-wrapper > .first {
+   left: 0;
+   top: 40px;
+}
+
+.nav > .center > .brush-eraser-wrapper > .last {
+   left: 44px;
+   top: 40px;
+}
+
+.nav > .center > .thickness-wrapper {
+   border: 1px solid red;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   align-items: center;
+   margin: 0 15px;
+   height: 40px;
+   width: 30px;
+   cursor: pointer;
+   /* position: relative; */
+}
+
+.nav > .center > .thickness-wrapper > .circle{
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #131C26;
+ }
+
+ .nav > .center > .thickness-wrapper > .thickness {
+    font-size: 16px;
+ }
+
+ .thickness-setting-wrapper {
+    position: absolute;
+    width: 300px;
+    height: 117px;
+    background-color: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(6,6,7,0.4);
+    display: none;
+ }
+
+ /* 点击调整画笔粗细时显示 */
+ .thickness-setting-wrapper.active {
+   display: block;
+   position: absolute;
+}
+
+.thickness-setting-wrapper .close{
+   display: block;
+   width: 20px;
+   height: 20px;
+   position: absolute;
+   top: 8px;
+   right: 8px;
+   cursor: pointer;
+}
+
+.thickness-setting-wrapper h3{
+   margin-top: 20px;
+   font-size: 16px;
+   font-weight: 400;
+   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+   padding-left: 24px;
+}
+
+.thickness-setting-wrapper ol.thickness-setting {
+   display: flex;
+   margin: 12px 24px;
+}
+
+.thickness-setting-wrapper .line {
+   position: absolute;
+   width: 21px;
+   height: 2px;
+   background-color: #1a8cff;
+   left: 36px;
+   top: 100px;
+   transition: all 0.3s;
+}
+
+.thickness-setting-wrapper .line.one {
+   left: 36px;
+   top: 100px;
+}
+
+.thickness-setting-wrapper .line.two {
+   left: 83px;
+   top: 100px;
+}
+
+.thickness-setting-wrapper .line.three {
+   left: 128px;
+   top: 100px;
+}
+
+.thickness-setting-wrapper .line.four {
+   left: 174px;
+   top: 100px;
+}
+
+.thickness-setting-wrapper .line.five {
+   left: 220px;
+   top: 100px;
+}
+
+.thickness-setting-wrapper ol.thickness-setting li {
+   display: flex;
+   width: 30px;
+   height: 40px;
+   flex-direction: column;
+   justify-content: space-around;
+   align-items: center;
+   margin: 0 7px;
+   border: 1px solid red;
+   cursor: pointer;
+   position: relative;
+}
+
+.thickness-setting-wrapper ol.thickness-setting li span{
+   display: inline-block;
+   font-size: 16px;
+}
+
+/* 当点击画笔粗细设置时，弹出这个框，并且默认是1号底部为蓝色 */
+
+
+/* 默认的情况是第一个底部是显示蓝色的 */
+
+
+.thickness-setting-wrapper ol.thickness-setting li .one {
+   width: 5px;
+   height: 5px;
+   border-radius: 50%;
+   background-color: #000000;
+}
+
+.thickness-setting-wrapper ol.thickness-setting li .two {
+   width: 8px;
+   height: 8px;
+   border-radius: 50%;
+   background-color: #000000;
+}
+.thickness-setting-wrapper ol.thickness-setting li .three {
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   background-color: #000000;
+}
+.thickness-setting-wrapper ol.thickness-setting li .four {
+   width: 12px;
+   height: 12px;
+   border-radius: 50%;
+   background-color: #000000;
+}
+.thickness-setting-wrapper ol.thickness-setting li .five {
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   background-color: #000000;
+}
+ .nav > .center > .colors {
+    border: 1px solid red;
+    display: flex;
+ }
+
+ .nav > .center > .colors > button{
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #000000;
+    margin-left: 10px;
+    cursor: pointer;
+    width: 40px;
+    height: 41px;
+ }
+
+ .nav > .center > .colors > button:nth-child(2){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #808080;
+ }
+
+ .nav > .center > .colors > button:nth-child(3){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+ }
+
+ .nav > .center > .colors > button:nth-child(4){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #1a8cff;
+ }
+
+ .nav > .center > .colors > button:nth-child(5){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #ff1a40;
+ }
+
+ .nav > .center > .colors > button:nth-child(5){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #ff1a40;
+ }
+
+ .nav > .center > .colors > button:nth-child(6){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #2bd965;
+ }
+
+ .nav > .center > .colors > button:nth-child(7){
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #ffdd33;
+ }
+
+ .nav > .center > .colors > button:last-child{
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: #dddddd;
+ }
+
+ .nav > .center > .colors > button > svg{
+    width:34px;
+    height: 34px;
+    margin: 3px;
+    display: none;
+ }
+
+ .nav > .center > .colors > button > svg.active{
+   display: inline;
+}
+
+ .nav > .save-wrapper {
+    margin-right: 24px;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a9fff;
+    padding: 0 20px;
+    border-radius: 5px;
+    cursor: pointer;
+ }
+
+ .nav > .save-wrapper .title{
+   margin-right: 15px;
+   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-size: 20px;
+   font-weight: 700;
+   line-height: 30px;
+   color: white;
+ }
+
+ .nav > .save-wrapper > svg {
+    width: 32px;
+    height: 32px;
+    /* margin: 4px 0; */
+    cursor: pointer;
+ }
+
+ main #canvas {
+    display: block;
+    background-color: skyblue;
+ }
+ 

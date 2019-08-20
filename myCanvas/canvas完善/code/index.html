@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chart canvasdemo</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://at.alicdn.com/t/font_1349666_6pnq5xkvf9.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Chart</h1>
+    </header>
+
+    <div class="nav">
+        <div class="clear-all">
+            <button id="clear-wrapper">
+                <svg class="icon" aria-hidden="true" id="clear">
+                    <use xlink:href="#icon-clear"></use>
+                </svg>
+            </button>
+            <button id="back-wrapper">
+                <svg class="icon" aria-hidden="true" id="back">
+                    <use xlink:href="#icon-back"></use>
+                </svg>
+            </button>
+            <button id="forward-wrapper">
+                <svg class="icon" aria-hidden="true" id="forward">
+                    <use xlink:href="#icon-qianjin"></use>
+                </svg>
+            </button>
+        </div>
+        <div class="center">
+            <div class="brush-eraser-wrapper">
+                <svg class="icon" aria-hidden="true" id="pen">
+                    <use xlink:href="#icon-pen"></use>
+                </svg>
+                <svg class="icon" aria-hidden="true" id="eraser">
+                    <use xlink:href="#icon-eraser2"></use>
+                </svg>
+                <div class="line"></div>
+            </div>
+            <div class="thickness-wrapper">
+                <div class="circle" id="circle"></div>
+                <span class="thickness">1</span>
+
+                <div class="thickness-setting-wrapper">
+                    <svg class="icon close" aria-hidden="true" id="closeDown">
+                        <use xlink:href="#icon-clear1"></use>
+                    </svg>
+                    <h3 class="title">Thickness</h3>
+                    <ol class="thickness-setting">
+                        <li class="thicknessAsOne active">
+                            <div class="one"></div>
+                            <span class="settingSize">1</span>
+                        </li>
+                        <li class="thicknessAsTwo">
+                            <div class="two"></div>
+                            <span class="settingSize">2</span>
+                        </li>
+                        <li class="thicknessAsThree">
+                            <div class="three"></div>
+                            <span class="settingSize">3</span>
+                        </li>
+                        <li class="thicknessAsFour">
+                            <div class="four"></div>
+                            <span class="settingSize">4</span>
+                        </li>
+                        <li class="thicknessAsFive">
+                            <div class="five"></div>
+                            <span class="settingSize">5</span>
+                        </li>
+                    </ol>
+                    <div class="line"></div>
+                </div>
+            
+            </div>
+            <div class="colors">
+                <button class="black">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="gray">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="white1">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="blue">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="red">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-gou"></use>
+                        </svg>
+                    </button>
+                <button class="green">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="orange">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-gou"></use>
+                    </svg>
+                </button>
+                <button class="white2">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-jiahao3"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="save-wrapper">
+            <span class="title">save</span>
+            <svg class="icon" aria-hidden="true" id="save">
+                <use xlink:href="#icon-save"></use>
+            </svg>
+        </div>
+    </div>
+
+    <main class="canvas-wrapper">
+        <canvas id="canvas"></canvas>
+    </main>
+    <script src="./main.js"></script>
+</body>
+
+</html>
