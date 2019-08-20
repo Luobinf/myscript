@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+        #canvas2 {
+            border: 1px solid skyblue;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <canvas id="canvas2" width="500" height="500"></canvas>
+    <script>
+        let canvas = document.getElementById('canvas')
+        let canvas2 = document.getElementById('canvas2')
+        let context2 = canvas2.getContext('2d')
+        let data
+
+        canvas.width = 500
+        canvas.height = 500
+        let context = canvas.getContext('2d')
+        // let img = new Image()
+        // img.onload = function () {
+        //     context.drawImage(img,0,0)
+        // }
+        // img.src = 'https://mdn.mozillademos.org/files/5397/rhino.jpg';
+
+        let painting = false
+        let lastPoint = {
+            x : undefined,
+            y : undefined
+        }
+        canvas.onmousedown = function (event) {
+            painting = true
+            let positionX = event.clientX
+            let positionY = event.clientY
+            lastPoint.x = positionX
+            lastPoint.y = positionY  
+        }
+        canvas.onmousemove = function (event) {
+            let positionX = event.clientX
+            let positionY = event.clientY
+            if (painting) {
+                context.beginPath()
+                context.moveTo(lastPoint.x,lastPoint.y)
+                context.lineTo(positionX,positionY)
+                context.stroke()
+                lastPoint.x = positionX
+                lastPoint.y = positionY  
+            }
+        }
+        canvas.onmouseup = function () {
+            painting = false
+            data = canvas.toDataURL()
+            console.log(data)
+            let img = new Image()
+            img.onload = function () {
+                context2.drawImage(img,0,0)
+            }
+            img.src = data
+        }
+
+    </script>
+</body>
+</html>

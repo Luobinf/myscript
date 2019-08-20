@@ -120,7 +120,7 @@ eraser.onclick = function () {
     brush.classList.remove('active')
 }
 brush.onclick = function (event) {
-    eraserEnabled  = false
+    eraserEnabled = false
     this.classList.add('active')
     eraser.classList.remove('active')
 

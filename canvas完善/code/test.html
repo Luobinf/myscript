@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <canvas id="canvas2" width="300" height="300"></canvas>
+    <canvas id="canvas3" width="300" height="300"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var canvas2 = document.getElementById('canvas2');
+        var canvas3 = document.getElementById('canvas3');
+        // if (canvas.getContext) {
+        //     var ctx = canvas.getContext('2d');
+        //     ctx.translate(0.5,0.5)
+        //     ctx.lineWidth = 1;
+        //     ctx.beginPath();
+        //     ctx.moveTo(55, 5);
+        //     ctx.lineTo(55, 140);
+        //     ctx.stroke();
+        // } else {
+        //     console.log('浏览器不支持canvas')
+        // }
+
+        //屏幕设备高清解决方案
+        function setupCanvas(canvas) {
+            let dpr = window.devicePixelRatio || 1
+            let rect = canvas.getBoundingClientRect()
+            canvas.width = rect.width * dpr
+            canvas.height = rect.height * dpr
+            let ctx = canvas.getContext('2d')
+            ctx.scale(dpr, dpr)
+            return ctx
+        }
+        let ctx = setupCanvas(canvas)
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(100, 100);
+        ctx.lineTo(200, 200);
+        ctx.stroke();
+
+        let context2 = canvas2.getContext('2d')
+        context2.beginPath()
+        context2.lineWidth = 1
+        context2.moveTo(200,200)
+        context2.lineTo(300,300)
+        context2.stroke()
+
+        let context3 = canvas3.getContext('2d')
+        context3.beginPath()
+        context3.lineWidth = 1
+        context3.moveTo(210.5,200)
+        context3.lineTo(310.5,300)
+        context3.stroke()
+    </script>
+</body>
+
+</html>
