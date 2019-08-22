@@ -5,7 +5,9 @@ let line = thicknessSettingWrapper.getElementsByClassName('line')[0]
 let circle = document.getElementById('circle')  //获取颜色左边的小圆点
 let firstLine = document.getElementsByClassName('line')[0]
 let save = document.querySelector('.save-wrapper')
-
+let clearWrapper = document.querySelector('#clear-wrapper')
+let backWrapper = document.querySelector('#back-wrapper')
+let forwardWrapper = document.querySelector('#forward-wrapper')
 let canvas = document.querySelector('#canvas')
 let context = canvas.getContext('2d')  //默认值
 context.width = 2
@@ -24,9 +26,9 @@ let lastPosition = {
     y: undefined
 }
 canvas.addEventListener('mousedown', function (event) {
-    clearWrapper.style.backgroundColor = '#1a9fff'
-    backWrapper.style.backgroundColor = '#1a9fff'
-    let positionX = event.clientX
+
+
+    let positionX = event.clientX - this.offsetLeft
     let positionY = event.clientY - this.offsetTop
 
     if (penUsing) {
@@ -46,7 +48,7 @@ canvas.addEventListener('mousemove', function (event) {
     if (!using) return
 
     if (penUsing) {
-        drawLine(lastPosition['x'], lastPosition['y'], positionX, positionY,lastLineWidth,lastColor)
+        drawLine(lastPosition['x'], lastPosition['y'], positionX, positionY, lastLineWidth, lastColor)
         //更新最新点的坐标
         lastPosition['x'] = positionX
         lastPosition['y'] = positionY
@@ -57,7 +59,7 @@ canvas.addEventListener('mousemove', function (event) {
 //防止鼠标移动到canvas元素外面时再将鼠标抬起，然后再回到canvas元素里面还可以画图
 canvas.addEventListener('mouseup', function (event) {
     using = false
-    //保存画布数据
+    //当鼠标抬起的时候保存一次画布数据
     saveCanvasData()
 })
 
@@ -84,7 +86,7 @@ thicknessWrapper.addEventListener('click', function () {
     let coords = this.getBoundingClientRect()
     thicknessSettingWrapper.classList.add('active')
     thicknessSettingWrapper.style.left = coords.left + window.pageXOffset + 'px'
-    thicknessSettingWrapper.style.top = coords.top + window.pageYOffset + 'px'
+    thicknessSettingWrapper.style.top = coords.top + window.pageYOffset - 3 + 'px'  //稍微往下了点，因此上移一点
 })
 
 //点击x按钮时关闭这个画笔选择框,需要停止冒泡，不然事件冒泡到父亲那里又会将active给加在class身上。
@@ -125,12 +127,6 @@ thicknessSettingWrapper.addEventListener('click', function (event) {
     }
 })
 
-
-
-let clearWrapper = document.querySelector('#clear-wrapper')
-let backWrapper = document.querySelector('#back-wrapper')
-let forwardWrapper = document.querySelector('#forward-wrapper')
-
 //清空画布
 clearWrapper.addEventListener('click', function (event) {
     let clear = event.target.closest('button')
@@ -144,18 +140,15 @@ clearWrapper.addEventListener('click', function (event) {
 backWrapper.addEventListener('click', function (event) {
     let clear = event.target.closest('button')
     if (clear != null) {
-        if (step < 0) {
-            this.style.backgroundColor = '#ececec'
-        } else {
-            canvasCancel()
-        }
+        forwardWrapper.style.backgroundColor = '#1a9fff'
+        canvasCancel()
     }
 })
 //反撤销
 forwardWrapper.addEventListener('click', function (event) {
     let clear = event.target.closest('button')
     if (clear != null) {
-        this.style.backgroundColor = '#ececec'
+        antiCanvasCancel()
     }
 })
 //保存
@@ -177,58 +170,68 @@ let lastActived
 colors.addEventListener('click', settingPenColor)
 
 
-
-
-
 //如何撤销和反撤销的思路：
 //每在canvas画布上画一次就将信息保存下来，可以使用canvas的toDataURL()方法，生成的是base64的图片。
 //自定义一个数组，将base64码放到数组中进行保存。当你需要撤销的时候将把数组的最后一个base码拿出来，再将它渲染到画布上。
 //使用canvas的drawImage()方法可以进行。
-
 let canvasDataHistory = []
-let step = -1
-let data
+let step = 0
+let data = canvas.toDataURL()
+canvasDataHistory.push(data)    //先进行canvas数据初始化
+
 function saveCanvasData() {
-    data = canvas.toDataURL()
+    clearWrapper.style.backgroundColor = '#1a9fff'
+    backWrapper.style.backgroundColor = '#1a9fff'
+    clearWrapper.classList.remove('disabled')
+    backWrapper.classList.remove('disabled')
     step++
-    if (step < canvasDataHistory.length) {
-        canvasDataHistory.length = step
-    }
+    data = canvas.toDataURL()
     canvasDataHistory.push(data)
 }
 
-//撤销:之前画了几次就有几次操作
+//撤销:之前绘画了几次就有几次操作
 function canvasCancel() {
-    if (step >0) {
-        step--
-        let img = new Image()
-        img.onload  = function () {
-            console.log(25)
-            context.drawImage(img, 0, 0)
-        }
+    forwardWrapper.classList.remove('disabled')
+    clearWrapper.classList.remove('disabled')
+    step--
+     //设置新的值之前，需要先清空画布
+     context.clearRect(0, 0, canvas.width, canvas.height)
+     let img = new Image()
+     img.onload = function () {
+         context.drawImage(img, 0, 0, canvas.width, canvas.height)
+     }
+    if ( step < canvasDataHistory.length-1 && step > 0) {
         img.src = canvasDataHistory[step]
-        console.log(canvasDataHistory)
+        // forwardWrapper.classList.remove('disabled')
     } else {
-        alert('无法继续撤销了!!!')
+        step = 0
+        img.src = canvasDataHistory[0]
+        clearWrapper.style.backgroundColor = '#ececec'
+        backWrapper.style.backgroundColor = '#ececec'
+        backWrapper.classList.add('disabled')
     }
-  
 }
 //反撤销
 function antiCanvasCancel() {
+    backWrapper.classList.remove('disabled')
+    clearWrapper.classList.remove('disabled')
+    clearWrapper.style.backgroundColor = '#1a9fff'
+    backWrapper.style.backgroundColor = '#1a9fff'
+    step++
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    let img = new Image()
+    img.onload = function () {
+        context.drawImage(img, 0, 0)
+    }
     if (step < canvasDataHistory.length - 1) {
-        step++
-        let img = new Image()
-        img.onload = function () {
-            context.drawImage(img, 0, 0)
-        }
         img.src = canvasDataHistory[step]
     } else {
-        alert('已经是最新的记录了')
+        step = canvasDataHistory.length - 1
+        img.src = canvasDataHistory[step]
+        forwardWrapper.style.backgroundColor = '#ececec'
+        forwardWrapper.classList.add('disabled')
     }
 }
-
-
-
 
 
 //绘制线段，不过不传入参数，线段宽度默认为2，线段颜色默认为黑色。
@@ -253,51 +256,44 @@ function settingPen(lineWidth) {
 function settingPenColor(event) {
     let target = event.target
     if (target.className === 'black') {
+        lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'black'
         lastColor = 'black'
     } else if (target.className === 'gray') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'gray'
         lastColor = 'gray'
     } else if (target.className === 'white1') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'white'
         lastColor = 'white'
     } else if (target.className === 'blue') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'blue'
         lastColor = 'blue'
     } else if (target.className === 'red') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'red'
         lastColor = 'red'
     } else if (target.className === 'green') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'green'
         lastColor = 'green'
     } else if (target.className === 'orange') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'orange'
         lastColor = 'orange'
     } else if (target.className === 'white2') {
         lastActived ? lastActived.classList.remove('active') : ''
         lastActived = target.firstElementChild
         lastActived.classList.add('active')
-        // context.strokeStyle = 'white'
         lastColor = 'white'
     } else {
         return
