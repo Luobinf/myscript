@@ -153,13 +153,17 @@ forwardWrapper.addEventListener('click', function (event) {
 })
 //保存
 save.addEventListener('click', function (event) {
-    let imgUrl = canvas.toDataURL('image/png')
-    let a = document.createElement('a')
-    document.body.append(a)
-    a.target = '_blank'
-    a.href = imgUrl
-    a.download = 'mypicture'
-    a.click()
+    let imgUrl,a
+    let filename = prompt("请输入你想要保存的文件名: ")
+    if (filename) {
+        imgUrl = canvas.toDataURL('image/png')
+        a = document.createElement('a')
+        a.target = '_blank'
+        a.href = imgUrl
+        a.download = filename
+        document.body.append(a)
+        a.click() 
+    }
 })
 
 //画笔颜色修改
