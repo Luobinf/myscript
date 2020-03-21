@@ -309,6 +309,7 @@ function settingPenColor(event) {
 function setCanvasSize() {
     let myImageData = context.getImageData(0, 0, canvas.width, canvas.height)
 
+    //document.documentElement.clientWidth为html宽度，也为viewport宽度，窗口宽度等于html元素宽度。
     let clientWidth = document.documentElement.clientWidth - canvas.offsetLeft
     let clientHeight = document.documentElement.clientHeight - canvas.offsetTop - 20
     canvas.width = clientWidth

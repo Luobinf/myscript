@@ -392,6 +392,7 @@ header h1 {
 
  main #canvas {
     display: block;
-    background-color: skyblue;
+    width: 100%;
+    background-color: white;
  }
  
